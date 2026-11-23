@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Clic, red y algoritmo: tres décadas de información digital</title>
+<style>
+:root{box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);color-scheme:light dark;
+--bg:#f2f4fa;--card:#fff;--ink:#12162b;--mut:#565d78;--line:#d6dbea;--on:#fff;
+--a:#2f6fed;--e:#c77a00;--r:#d62a75;--p:#0f8664;--i:#7447e0}
+@media(prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0d1020;--card:#171b33;--ink:#eceffc;--mut:#a2a9c6;--line:#2a2f52;--on:#0d1020;--a:#6b9bff;--e:#ffb52e;--r:#ff6aa8;--p:#3fd3a8;--i:#a788ff}}
+:root[data-theme="dark"]{--bg:#0d1020;--card:#171b33;--ink:#eceffc;--mut:#a2a9c6;--line:#2a2f52;--on:#0d1020;--a:#6b9bff;--e:#ffb52e;--r:#ff6aa8;--p:#3fd3a8;--i:#a788ff}
+html{scroll-padding-top:calc(env(safe-area-inset-top,0px) + 120px)}
+body{margin:0;background:var(--bg);color:var(--ink);font:11pt/1.5 Arial,Helvetica,sans-serif}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:30;background:var(--bg)}
+header{position:sticky;top:env(safe-area-inset-top,0px);z-index:20;background:var(--bg);border-bottom:1px solid var(--line);padding:14px 16px 10px}
+.wrap{max-width:720px;margin:0 auto}
+h1{margin:0 0 2px;font-size:clamp(1.3rem,5.4vw,1.9rem);line-height:1.15;letter-spacing:-.02em}
+.sub{margin:0 0 10px;color:var(--mut);font-size:.9rem}
+.chips{display:flex;gap:8px;overflow-x:auto;padding-bottom:4px;scrollbar-width:none}
+.chips::-webkit-scrollbar{display:none}
+.chips button{flex:none;font:inherit;font-size:.88rem;color:var(--ink);background:transparent;border:1.5px solid var(--line);border-radius:999px;padding:5px 13px;cursor:pointer;transition:background .2s,color .2s,border-color .2s}
+.chips button[aria-pressed="true"]{background:var(--c,var(--ink));border-color:var(--c,var(--ink));color:var(--on)}
+.chips button:focus-visible{outline:3px solid var(--ink);outline-offset:2px}
+.bar{position:absolute;left:0;bottom:-1px;height:3px;width:0;background:var(--ink)}
+main{max-width:720px;margin:0 auto;padding:8px 16px 56px}
+.rail{margin-left:6px;padding-left:20px;border-left:2px solid var(--line)}
+.dec{margin:30px 0 0;font-size:.95rem;font-weight:bold;color:var(--mut)}
+.item{position:relative;padding:14px 0 6px}
+.item::before{content:"";position:absolute;left:-27px;top:34px;width:12px;height:12px;border-radius:50%;background:var(--c);box-shadow:0 0 0 4px var(--bg)}
+.yr{margin:0;font:900 clamp(3.2rem,17vw,5.6rem)/.9 "Arial Black",Arial,sans-serif;letter-spacing:-.04em;color:transparent;-webkit-text-stroke:2px var(--c)}
+.card{display:grid;grid-template-columns:auto 1fr;gap:14px;margin-top:8px;padding:14px 16px;background:var(--card);border:1px solid var(--line);border-left:5px solid var(--c);border-radius:14px}
+.badge{width:58px;height:58px;border-radius:16px;display:grid;place-items:center;font-size:31px;background:color-mix(in srgb,var(--c) 16%,transparent)}
+h3{margin:0 0 4px;font-size:1.1rem;line-height:1.25}
+.card p{margin:0;color:var(--mut)}
+.tag{display:block;margin-top:8px;font-size:.82rem;font-weight:bold;color:var(--c)}
+.end{margin:26px 0 0;color:var(--mut);font-size:.92rem}
+.empty{color:var(--mut)}
+</style>
+</head>
+<body>
+<header>
+<div class="wrap">
+<h1>Clic, red y algoritmo: tres décadas de información digital</h1>
+<p class="sub"><span id="n">17</span> hitos entre 1991 y 2024. Toca un tema para filtrarlos.</p>
+<div class="chips" id="chips" role="group" aria-label="Filtrar por tema"></div>
+</div>
+<div class="bar" id="bar"></div>
+</header>
+<main><div class="rail" id="list"></div><p class="end">La línea sigue abierta: la información de hoy se escribe en tiempo real.</p></main>
+<script>
+const G={a:['Acceso y buscadores','--a'],e:['Economía digital','--e'],r:['Conocimiento y redes','--r'],p:['Privacidad y verdad','--p'],i:['Inteligencia artificial','--i']};
+const D=[
+[1991,'🌐','a','Nace la World Wide Web','Tim Berners-Lee y el CERN abren la Web al público; el primer sitio web se había creado en 1990.'],
+[1993,'🧭','a','La Web se libera','El CERN pone la tecnología web en el dominio público y aparece Mosaic, el primer navegador gráfico popular.'],
+[1995,'🛒','e','Comercio electrónico','Amazon y eBay llegan a internet y la información empieza a convertirse en negocio.'],
+[1998,'🔎','a','Se funda Google','Su buscador organiza la información de la Web y la hace accesible en segundos.'],
+[1999,'🎵','e','Napster','Inaugura el intercambio masivo de archivos entre usuarios y cambia la forma de distribuir música.'],
+[2001,'📚','r','Wikipedia','Nace la enciclopedia colaborativa: cualquiera puede crear y editar conocimiento.'],
+[2004,'👥','r','Facebook y la Web 2.0','Los usuarios dejan de solo consumir información y empiezan a producirla.'],
+[2005,'▶️','r','YouTube','El video en línea se vuelve una fuente masiva de información y entretenimiento.'],
+[2006,'🐦','r','Twitter','Los mensajes breves y en tiempo real aceleran la circulación de noticias.'],
+[2007,'📱','a','iPhone','Se populariza el smartphone y la información pasa a estar siempre en el bolsillo.'],
+[2008,'🪙','e','Bitcoin','Satoshi Nakamoto publica su documento técnico y presenta la blockchain, un registro de datos descentralizado.'],
+[2013,'🕵️','p','Revelaciones de Snowden','Se hace pública la vigilancia masiva de datos y se abre el debate sobre privacidad.'],
+[2016,'📰','p','Era de la posverdad','“Post-truth” es la palabra del año del diccionario Oxford; la desinformación y las fake news ganan relevancia.'],
+[2018,'🛡️','p','GDPR','Entra en vigor el reglamento europeo de protección de datos, tras el escándalo de Cambridge Analytica.'],
+[2020,'😷','p','COVID-19 e infodemia','La OMS advierte del exceso de información, y la educación y el trabajo se vuelven digitales.'],
+[2022,'🤖','i','ChatGPT','La inteligencia artificial generativa llega al público general.'],
+[2024,'⚖️','i','Ley de IA de la UE','Entra en vigor la primera regulación integral de la inteligencia artificial.']
+];
+const chips=document.getElementById('chips'),list=document.getElementById('list'),n=document.getElementById('n');
+let f='all';
+function label(y){const d=Math.floor(y/10)*10;return d===1990?'Años 90':'Años '+d}
+function render(){
+  const rows=D.filter(d=>f==='all'||d[2]===f);
+  n.textContent=rows.length;
+  let last='',h='';
+  rows.forEach(([y,e,g,t,x])=>{
+    const l=label(y);
+    if(l!==last){h+='<h2 class="dec">'+l+'</h2>';last=l}
+    h+='<article class="item" style="--c:var('+G[g][1]+')"><p class="yr">'+y+'</p><div class="card"><div class="badge" aria-hidden="true">'+e+'</div><div><h3>'+t+'</h3><p>'+x+'</p><span class="tag">'+G[g][0]+'</span></div></div></article>';
+  });
+  list.innerHTML=h;
+  chips.querySelectorAll('button').forEach(b=>b.setAttribute('aria-pressed',b.dataset.k===f));
+}
+[['all','Todos',null],...Object.entries(G).map(([k,v])=>[k,v[0],v[1]])].forEach(([k,t,c])=>{
+  const b=document.createElement('button');
+  b.type='button';b.dataset.k=k;b.textContent=t;
+  if(c)b.style.setProperty('--c','var('+c+')');
+  b.onclick=()=>{f=k;render();window.scrollTo({top:0,behavior:'smooth'})};
+  chips.appendChild(b);
+});
+render();
+const bar=document.getElementById('bar');
+addEventListener('scroll',()=>{
+  const m=document.documentElement.scrollHeight-innerHeight;
+  bar.style.width=(m>0?Math.min(100,scrollY/m*100):0)+'%';
+},{passive:true});
+</script>
+</body>
+</html>
